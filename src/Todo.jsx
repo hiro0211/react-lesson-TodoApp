@@ -3,14 +3,14 @@ import "./index.css";
 
 export const Todo = () => {
   const [todoText, setTodoText] = useState("");
-  const [incompleteTodos, setIncompleteTodos] = useState([""]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState(["ううう", "えええ"]);
+  const [isComplete, setIsComplete] = useState(false);
   // const [status, setStatus] = useState("未着手", "作業中", "完了");
 
   const onChangeTodoText = (e) => setTodoText(e.target.value);
 
   const filterOptions = [
-    { value: "all", label: "すべて" },
     { value: "notStarted", label: "未着手" },
     { value: "inProgress", label: "作業中" },
     { value: "done", label: "完了" },
@@ -18,7 +18,7 @@ export const Todo = () => {
 
   // const onClickChangeStatus = (e) => setStatus(e.target.value);
 
-  const onClickAdd = () => {
+  const onClickAdd = (index) => {
     if (todoText === "") return;
     const newTodos = [...incompleteTodos, todoText];
     setIncompleteTodos(newTodos);
@@ -29,6 +29,10 @@ export const Todo = () => {
     const newTodos = [...incompleteTodos, todoText];
     setIncompleteTodos(newTodos);
     setTodoText("");
+  };
+
+  const onClickComplete = (index) => {
+    setIsComplete(index, !isComplete);
   };
 
   const onClickDelete = (index) => {
@@ -65,9 +69,18 @@ export const Todo = () => {
             return (
               <li key={todo}>
                 <div>
-                  <p>{todo}</p>
+                  <p
+                    style={
+                      isComplete
+                        ? { textDecoration: "line-through" }
+                        : { textDecoration: "none" }
+                    }
+                  >
+                    {todo}
+                  </p>
                   {/* <button>完了</button> */}
                   <button onClick={() => onClickDelete(index)}>削除</button>
+                  <button onClick={onClickComplete}>完了</button>
                   <select>
                     {filterOptions.map(({ value, label }) => (
                       <option value={value}>{label}</option>
