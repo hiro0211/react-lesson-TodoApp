@@ -5,8 +5,10 @@ export const Todo = () => {
   const [todoText, setTodoText] = useState("");
   const [todos, setTodos] = useState([]);
 
+  // inputの値を変更する関数
   const onChangeTodoText = (e) => setTodoText(e.target.value);
 
+  // todoを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
     const newTodos = [...todos, { text: todoText, isComplete: false }];
@@ -14,12 +16,14 @@ export const Todo = () => {
     setTodoText("");
   };
 
+  // todoを完了する関数
   const onClickComplete = (index) => {
     const newTodos = [...todos];
     newTodos[index].isComplete = !newTodos[index].isComplete;
     setTodos(newTodos);
   };
 
+  // todoを削除する関数
   const onClickDelete = (index) => {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
@@ -29,6 +33,7 @@ export const Todo = () => {
   return (
     <>
       <div>
+
         <input
           onChange={onChangeTodoText}
           placeholder="Todoを入力"
